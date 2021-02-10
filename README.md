@@ -1,4 +1,4 @@
-# L03 Group 3 - NOAA Webservice
+# L03 Group 3 - NOAA API
 
 Before running the application you will need to download the GSON library, via maven
 
