@@ -28,6 +28,5 @@ public class DataSets {
     public void setResults(List<Result> results) {
         this.results = results;
     }
-
 }
 

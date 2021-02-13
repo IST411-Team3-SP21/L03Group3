@@ -57,12 +57,10 @@ public class HttpRequestSender implements RequestSender {
     private HttpURLConnection createConnection(Request request) throws IOException {
         URL url = new URL(request.getUrl());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
         connection.setConnectTimeout(TIMEOUT);
         connection.setReadTimeout(TIMEOUT);
-
         connection.setRequestMethod(SEND_METHOD);
-
+        connection.setRequestProperty("TOKEN", this.apiToken);
         return connection;
     }
 
@@ -73,9 +71,7 @@ public class HttpRequestSender implements RequestSender {
      * @throws IOException
      */
     private Response send(HttpURLConnection connection) throws IOException {
-        connection.setRequestProperty("TOKEN", this.apiToken);
         connection.connect();
-
         if (connection.getResponseCode() != 200) {
             throw new IOException("Bad response! Code: " + connection.getResponseCode());
         }
@@ -86,12 +82,10 @@ public class HttpRequestSender implements RequestSender {
         }
 
         String body;
-
         try (InputStream inputStream = connection.getInputStream()) {
 
             String encoding = connection.getContentEncoding();
             encoding = encoding == null ? ENCODING : encoding;
-
             body = toString(inputStream, encoding);
         } catch (IOException e) {
             throw new IOException(e);
